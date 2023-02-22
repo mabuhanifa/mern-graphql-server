@@ -89,10 +89,20 @@ const mutation = new GraphQLObjectType({
         return client.save();
       },
     },
+    // delete client
+    deleteClient: {
+      type: ClientType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Client.findByIdAndRemove(args.id);
+      },
+    },
   },
 });
 
 module.exports = new GraphQLSchema({
   query: RootQuery,
-  mutation
+  mutation,
 });
